@@ -8,7 +8,7 @@ module.exports = (env, argv) => {
     const isProd = argv.mode === 'production';
     const rootDir = path.resolve(__dirname);
 
-    let cssLoaders;
+    let cssLoaders, jsLoaders;
     return {
         entry: './src/index.js',
         output: {
@@ -23,7 +23,7 @@ module.exports = (env, argv) => {
                     loader: ['handlebars-loader'],
                 },
                 {
-                    test: /\.css/,
+                    test: /\.css$/,
                     loader: (cssLoaders = [
                         isDev
                             ? 'style-loader'
@@ -42,8 +42,21 @@ module.exports = (env, argv) => {
                     ])
                 },
                 {
-                    test: /\.scss/,
+                    test: /\.scss$/,
                     loader: cssLoaders.concat('sass-loader'),
+                },
+                {
+                    test: /\.jsx?$/,
+                    loader: (jsLoaders = [{
+                        loader: 'babel-loader',
+                        options: {
+                            presets: ['@babel/preset-env'],
+                        }
+                    }])
+                },
+                {
+                    test: /\.tsx?/,
+                    loader: jsLoaders.concat('ts-loader'),
                 }
             ]
         },
