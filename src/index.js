@@ -5,4 +5,4 @@ document.getElementById('root').appendChild((() => {
     h1.innerHTML = "Hello World!";
     h1.classList.add(styles.header);
     return h1;
-})())
+})());
