@@ -28,13 +28,14 @@ module.exports = (env, argv) => {
                         isDev
                             ? 'style-loader'
                             : MiniCssExtractPlugin.loader,
+                        'css-modules-typescript-loader',
                         {
                             loader: 'css-loader',
                             options: {
                                 modules: {
                                     mode: 'local',
                                     localIdentName: isDev
-                                        ? '[path][name]__[local]'
+                                        ? '[path][local]__[hash:base64:5]'
                                         : '[hash:base64]',
                                 }
                             }
@@ -50,7 +51,7 @@ module.exports = (env, argv) => {
                     loader: (jsLoaders = [{
                         loader: 'babel-loader',
                         options: {
-                            presets: ['@babel/preset-env'],
+                            presets: ['@babel/preset-env', '@babel/preset-react'],
                         }
                     }])
                 },
@@ -69,6 +70,9 @@ module.exports = (env, argv) => {
             new MiniCssExtractPlugin({
                 filename: isDev ? 'bundle.css' : 'bundle.[contenthash].css',
             }),
-        ]
+        ],
+        resolve: {
+            extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        }
     };
 }
