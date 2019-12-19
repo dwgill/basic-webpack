@@ -67,7 +67,6 @@ module.exports = (env, argv) => {
             ]
         },
         plugins: [
-            new CleanWebpackPlugin(),
             new HtmlWebpackPlugin({
                 template: path.resolve(rootDir, 'src/index.hbs'),
                 title: "Hello World!"
@@ -75,6 +74,7 @@ module.exports = (env, argv) => {
             new MiniCssExtractPlugin({
                 filename: isDev ? 'bundle.css' : 'bundle.[contenthash].css',
             }),
+            new CleanWebpackPlugin(),
         ],
         resolve: {
             extensions: ['.js', '.jsx', '.ts', '.tsx'],
