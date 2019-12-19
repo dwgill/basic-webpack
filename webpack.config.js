@@ -16,6 +16,11 @@ module.exports = (env, argv) => {
             filename: isDev ? 'bundle.js' : 'bundle.[contenthash].js',
             publicPath: "",
         },
+        devServer: {
+            contentBase: path.resolve(rootDir, 'dist'),
+            index: 'index.html',
+            port: 9999,
+        },
         module: {
             rules: [
                 {
