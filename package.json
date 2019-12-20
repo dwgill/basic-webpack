@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build-dev": "webpack --mode=development",
+    "build-none": "webpack --mode=none",
     "build-prod": "webpack --mode=production",
     "dev": "webpack-dev-server --mode=development",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,scss}\"",
@@ -30,7 +31,6 @@
     "handlebars": "^4.5.3",
     "handlebars-loader": "^1.7.1",
     "html-webpack-plugin": "^3.2.0",
-    "lint-staged": "^9.5.0",
     "mini-css-extract-plugin": "^0.8.2",
     "node-sass": "^4.13.0",
     "prettier": "^1.19.1",
