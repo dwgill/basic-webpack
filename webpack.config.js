@@ -10,10 +10,7 @@ module.exports = (env, argv) => {
 
   let cssLoaders, jsLoaders, justApp1Chunk, bothAppsChunk;
   return {
-    entry: {
-      [(justApp1Chunk = "just-app-1")]: "./src/just-app-1.js",
-      [(bothAppsChunk = "both-apps")]: "./src/both-apps.js"
-    },
+    entry: "./src/index.js",
     output: {
       path: path.resolve(rootDir, "dist"),
       filename: isProd ? "[name].[contenthash].js" : "[name].js",
@@ -76,15 +73,7 @@ module.exports = (env, argv) => {
     },
     plugins: [
       new HtmlWebpackPlugin({
-        filename: "both-apps.html",
-        chunks: [bothAppsChunk, "vendors~both-apps~just-app-1"],
-        template: path.resolve(rootDir, "src/html-template.hbs"),
-        title: "Hello World!"
-      }),
-      new HtmlWebpackPlugin({
-        filename: "just-app-1.html",
-        chunks: [justApp1Chunk, "vendors~both-apps~just-app-1"],
-        template: path.resolve(rootDir, "src/html-template.hbs"),
+        template: path.resolve(rootDir, "src/index.hbs"),
         title: "Hello World!"
       }),
       new MiniCssExtractPlugin({
