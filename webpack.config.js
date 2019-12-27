@@ -8,7 +8,7 @@ module.exports = (env, argv) => {
   const isProd = argv.mode === "production";
   const rootDir = path.resolve(__dirname);
 
-  let cssLoaders, jsLoaders, justApp1Chunk, bothAppsChunk;
+  let cssLoaders, jsLoaders;
   return {
     entry: "./src/index.js",
     output: {
