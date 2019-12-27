@@ -5,15 +5,24 @@ const path = require("path");
 
 module.exports = (env, argv) => {
   const isDev = argv.mode === "development";
+  const isProd = argv.mode === "production";
   const rootDir = path.resolve(__dirname);
 
-  let cssLoaders, jsLoaders;
+  let cssLoaders, jsLoaders, justApp1Chunk, bothAppsChunk;
   return {
-    entry: "./src/index.js",
+    entry: {
+      [(justApp1Chunk = "just-app-1")]: "./src/just-app-1.js",
+      [(bothAppsChunk = "both-apps")]: "./src/both-apps.js"
+    },
     output: {
       path: path.resolve(rootDir, "dist"),
-      filename: isDev ? "bundle.js" : "bundle.[contenthash].js",
+      filename: isProd ? "[name].[contenthash].js" : "[name].js",
       publicPath: ""
+    },
+    optimization: {
+      splitChunks: {
+        chunks: isDev ? "async" : "all"
+      }
     },
     devServer: {
       contentBase: path.resolve(rootDir, "dist"),
@@ -67,11 +76,19 @@ module.exports = (env, argv) => {
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: path.resolve(rootDir, "src/index.hbs"),
+        filename: "both-apps.html",
+        chunks: [bothAppsChunk, "vendors~both-apps~just-app-1"],
+        template: path.resolve(rootDir, "src/html-template.hbs"),
+        title: "Hello World!"
+      }),
+      new HtmlWebpackPlugin({
+        filename: "just-app-1.html",
+        chunks: [justApp1Chunk, "vendors~both-apps~just-app-1"],
+        template: path.resolve(rootDir, "src/html-template.hbs"),
         title: "Hello World!"
       }),
       new MiniCssExtractPlugin({
-        filename: isDev ? "bundle.css" : "bundle.[contenthash].css"
+        filename: isDev ? "[name].css" : "[name].[contenthash].css"
       }),
       new CleanWebpackPlugin()
     ],
